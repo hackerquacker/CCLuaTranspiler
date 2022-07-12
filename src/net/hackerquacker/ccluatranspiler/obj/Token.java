@@ -83,7 +83,7 @@ public class Token {
     }
 
     @Override public String toString(){
-        return "Token{" + this.token + ", " + String.format("%s", this.type) + "}";
+        return "Token{'" + this.token + "', " + String.format("%s", this.type) + "}";
     }
 
     /**
@@ -92,6 +92,26 @@ public class Token {
      */
     private static TokenType getTypeFromString(String token){
         // TODO: Implement this method to return the type of the token from the token string
-        return TokenType.UNKNOWN;
+        if (token.equals("("))
+            return TokenType.OPEN_BRACKET;
+        if (token.equals(")"))
+            return TokenType.CLOSED_BRACKET;
+        if (token.equals(","))
+            return TokenType.SEPERATOR;
+        if (token.equals(";"))
+            return TokenType.EOL;
+        if (token.equals("{"))
+            return TokenType.OPEN_BRACKET;
+        if (token.equals("}"))
+            return TokenType.CLOSED_BRACKET;
+        if (token.equals("="))
+            return TokenType.ASSIGN;
+        if (token.matches("(<|>|\\+|\\-|\\*|/||!|=)=") || token.equals("&&") || token.equals("||") || token.equals("++") || token.equals("--"))
+            return TokenType.OPERATOR;
+        if (token.matches("if|while|else|elif|for"))
+            return TokenType.CONDITION;
+        if (token.matches("func|static|const|var|this|return|new"))
+            return TokenType.KEYWORD;
+        return TokenType.IDENTIFIER;
     }
 }

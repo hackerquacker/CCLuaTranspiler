@@ -1,6 +1,7 @@
 package net.hackerquacker.ccluatranspiler;
 
 import net.hackerquacker.ccluatranspiler.obj.LexerToken;
+import net.hackerquacker.ccluatranspiler.obj.Token;
 
 public class Transpiler {
 
@@ -11,11 +12,12 @@ public class Transpiler {
         String testCode = "//This is a test\n\nfunc main(args, args2){\n\tvar test = \"Hello World!\";\n\tif(test == \"Hello World\" && test != 3){\n\t\tprint(test);\n\t}\n}";
 
         Lexer lexer = new Lexer(testCode);
+        AbstractSyntaxTree ast = new AbstractSyntaxTree(lexer);
 
         System.out.println(testCode);
 
-        for(LexerToken lt : lexer.getTokens()){
-            System.out.println(lt);
+        for(Token t : ast.getTokens()){
+            System.out.println(t);
         }
     }
 

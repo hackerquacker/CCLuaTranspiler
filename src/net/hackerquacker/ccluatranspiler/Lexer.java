@@ -169,7 +169,7 @@ public class Lexer {
         }
 
         // add the token to the tokens array. Set the next token of this token to the current last token in the tokens array
-        LexerToken lt = new LexerToken(identifier, TokenType.IDENTIFIER);
+        LexerToken lt = new LexerToken(identifier);
         if (!this.tokens.isEmpty())
             this.tokens.get(this.tokens.size()-1).setNext(lt);
         this.tokens.add(lt);
