@@ -4,6 +4,7 @@ import net.hackerquacker.ccluatranspiler.enums.TokenType;
 import net.hackerquacker.ccluatranspiler.obj.LexerToken;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -108,6 +109,9 @@ public class Lexer {
             this.index++;
             this.getCharacter();
         }
+
+        this.index += 2;
+        this.getCharacter();
     }
 
     /** Parses a string literal. E.g. "Hello World!" */

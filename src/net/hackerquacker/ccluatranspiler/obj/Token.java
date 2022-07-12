@@ -114,4 +114,8 @@ public class Token {
             return TokenType.KEYWORD;
         return TokenType.IDENTIFIER;
     }
+
+    public void setParent(Token peek) {
+        this.parent = peek;
+    }
 }
