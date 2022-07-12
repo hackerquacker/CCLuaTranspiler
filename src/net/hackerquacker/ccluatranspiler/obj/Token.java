@@ -27,6 +27,11 @@ public class Token {
         this.type = Token.getTypeFromString(token);
     }
 
+    public Token(String token, TokenType type){
+        this.token = token;
+        this.type = type;
+    }
+
     /**
      * Returns the string representation of this token
      */
