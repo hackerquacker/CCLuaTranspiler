@@ -82,6 +82,14 @@ public class Token {
         return false;
     }
 
+    public boolean equals(TokenType type){
+        return this.getType().equals(type);
+    }
+
+    public boolean equals(String token){
+        return this.getToken().equals(token);
+    }
+
     @Override public String toString(){
         return "Token{'" + this.token + "', " + String.format("%s", this.type) + "}";
     }

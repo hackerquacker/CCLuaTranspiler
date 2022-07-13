@@ -15,8 +15,11 @@ public abstract class CCLStatement {
         this.startToken = startToken;
         this.state = state;
 
+        this.init();
         this.parse();
     }
+
+    protected abstract void init();
 
     protected abstract void parse();
 

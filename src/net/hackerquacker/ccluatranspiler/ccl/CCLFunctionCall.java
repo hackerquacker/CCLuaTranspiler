@@ -11,6 +11,11 @@ public class CCLFunctionCall extends CCLStatement{
     }
 
     @Override
+    protected void init() {
+
+    }
+
+    @Override
     protected void parse() {
 
     }

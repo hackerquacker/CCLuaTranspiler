@@ -10,7 +10,7 @@ public class Transpiler {
 
         // Test code
 
-        String testCode = "/*This is a test\nOf a multiline comment*/ \nfunc main(args, args2){\n\tvar test = \"Hello World!\";\n\tif(test == \"Hello World\" && test != 3){\n\t\tprint(test);\n\t}\n}";
+        String testCode = "/*This is a test\nOf a multiline comment*/ \nconst constTest = \"Hello World!\";\nfunc main(args, args2){\n\tvar test = \"Hello World!\";\n\tif(test == \"Hello World\" && test != 3){\n\t\tprint(test);\n\t}\n}";
 
         Lexer lexer = new Lexer(testCode);
         AbstractSyntaxTree ast = new AbstractSyntaxTree(lexer);
@@ -22,6 +22,8 @@ public class Transpiler {
         }
 
         CCLProgram program = new CCLProgram(ast);
+
+        System.out.println(program);
     }
 
     /** Main Entrypoint for the CCLuaTranspiler Program */
