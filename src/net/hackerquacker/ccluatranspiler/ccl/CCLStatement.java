@@ -1,7 +1,12 @@
 package net.hackerquacker.ccluatranspiler.ccl;
 
 import net.hackerquacker.ccluatranspiler.AbstractSyntaxTree;
+import net.hackerquacker.ccluatranspiler.enums.TokenType;
 import net.hackerquacker.ccluatranspiler.obj.Token;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * This class is the interface for all CCL Program Objects.
@@ -60,5 +65,38 @@ public abstract class CCLStatement {
 
     @Override public String toString(){
         return this.asString();
+    }
+
+
+    public static final List<CCLStatement> parseStatements(CCLProgram program, boolean innerStatement){
+        List<CCLStatement> statements = new ArrayList<>();
+        Stack<Token> tokenStack = new Stack<>();
+
+        while (program.getAST().hasNext()){
+            Token token = program.getAST().next();
+            if (innerStatement && token.equals(TokenType.OPEN_BLOCK))
+                tokenStack.push(token);
+
+            if (token.equals("func")){
+                statements.add(new CCLFunction(program, token));
+            }
+
+            if (token.equals("var") || token.equals("const")){
+                // TODO: implement Variable definition class
+                statements.add(new CCLVariableAssign(program, token));
+            }
+
+            if (token.equals("class")){
+                // TODO: implement classes
+            }
+
+            if (innerStatement && token.equals(TokenType.CLOSED_BLOCK))
+                tokenStack.pop();
+
+            if (innerStatement && tokenStack.empty())
+                break;
+        }
+
+        return statements;
     }
 }

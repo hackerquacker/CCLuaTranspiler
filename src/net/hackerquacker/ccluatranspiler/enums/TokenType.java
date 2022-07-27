@@ -41,5 +41,7 @@ public enum TokenType {
     /** The , for seperating parameters */
     SEPERATOR,
 
+    TYPE_DEF,
+
     UNKNOWN;
 }

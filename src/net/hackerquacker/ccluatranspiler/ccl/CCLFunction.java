@@ -13,6 +13,8 @@ public class CCLFunction extends CCLStatement{
     private List<CCLVariable> arguments;
     private List<CCLStatement> statements;
 
+    private String returnType;
+
     private CCLClass parentClass = null;
 
     public CCLFunction(CCLProgram state, Token startToken) {
@@ -37,16 +39,52 @@ public class CCLFunction extends CCLStatement{
 
         Token curToken = this.getAST().next();
         while (!curToken.equals(TokenType.CLOSED_BRACKET)){
+            String name = null;
+            String type = null;
             if (curToken.equals(TokenType.IDENTIFIER)) {
-                this.arguments.add(new CCLVariable(this.parentClass, curToken.getToken()));
+                if (curToken.next().equals(TokenType.IDENTIFIER)){
+                    type = curToken.getToken();
+                    curToken = this.getAST().next();
+                    name = curToken.getToken();
+                }else name = curToken.getToken();
             }
             curToken = this.getAST().next();
+
+            if (curToken.equals(TokenType.TYPE_DEF)){
+                if (type == null) {
+                    curToken = this.getAST().next();
+                    // curToken = type of variable
+                    System.err.println("Variable typing isnt supported in this version... ignoring");
+                    type = curToken.getToken();
+
+                    curToken = this.getAST().next();
+                }else throw new IllegalStateException("Doubly defined type for variable " + name);
+            }
+
+            if (name != null){
+                this.arguments.add(new CCLVariable(this.parentClass, name, type));
+            }
         }
 
-        curToken = this.getAST().next();
-        if (curToken.equals(TokenType.OPEN_BLOCK)){
-            // TODO: read all tokens as statements inside this function
+
+        // Check if this function has a return type (Currently Unsupported)
+        if (curToken.next().equals(TokenType.TYPE_DEF)){
+            curToken = this.getAST().next();
+            curToken = this.getAST().next();
+
+            // curToken = type of function
+            this.returnType = curToken.getToken();
+
+            System.err.println("Function return type isn't supported in this version... ignoring");
         }
+
+        //curToken = this.getAST().next();
+        //if (curToken.equals(TokenType.OPEN_BLOCK)){
+            // TODO: read all tokens as statements inside this function
+        //}
+
+        this.statements = CCLStatement.parseStatements(this.getState(), true);
+
     }
 
     @Override
@@ -54,7 +92,7 @@ public class CCLFunction extends CCLStatement{
         String args = "";
         for (CCLVariable arg : this.arguments)
             args += arg + ", ";
-        return "(func)" + this.name + "(" + args + ")";
+        return "("+(this.returnType != null ? this.returnType : "func")+")" + this.name + "(" + args + ")";
     }
 
     @Override

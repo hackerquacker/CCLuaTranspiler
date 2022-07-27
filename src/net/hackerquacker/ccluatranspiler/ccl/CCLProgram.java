@@ -1,7 +1,6 @@
 package net.hackerquacker.ccluatranspiler.ccl;
 
 import net.hackerquacker.ccluatranspiler.AbstractSyntaxTree;
-import net.hackerquacker.ccluatranspiler.obj.Token;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ public class CCLProgram {
 
     private final AbstractSyntaxTree ast;
 
-    private final List<CCLStatement> statements;
+    private List<CCLStatement> statements;
 
     public CCLProgram(AbstractSyntaxTree ast){
         this.ast = ast;
@@ -22,21 +21,7 @@ public class CCLProgram {
     }
 
     private void parse(){
-        while (this.ast.hasNext()){
-            Token token = this.ast.next();
-
-            if (token.equals("func")){
-                this.statements.add(new CCLFunction(this, token));
-            }
-
-            if (token.equals("var") || token.equals("const")){
-                // TODO: implement Variable definition class
-            }
-
-            if (token.equals("class")){
-                // TODO: implement classes
-            }
-        }
+        this.statements = CCLStatement.parseStatements(this, false);
     }
 
     public final AbstractSyntaxTree getAST(){

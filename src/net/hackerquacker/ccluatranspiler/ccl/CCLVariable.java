@@ -6,11 +6,19 @@ public class CCLVariable{
     private CCLStatement value;
     private final CCLClass parentClass;
 
+    private String type;
+
     private boolean isConstant = false;
     private boolean isGlobal = false;
 
     public CCLVariable(CCLClass parentClass, String name){
         this.name = name;
+        this.parentClass = parentClass;
+    }
+
+    public CCLVariable(CCLClass parentClass, String name, String type){
+        this.name = name;
+        this.type = type;
         this.parentClass = parentClass;
     }
 
@@ -55,6 +63,6 @@ public class CCLVariable{
 
 
     @Override public String toString(){
-        return "CCLVariable{" + this.name + "}";
+        return "CCLVariable{" + this.name + (this.type != null ? ", type=" + this.type : "")+"}";
     }
 }

@@ -114,6 +114,10 @@ public class Token {
             return TokenType.CLOSED_BRACKET;
         if (token.equals("="))
             return TokenType.ASSIGN;
+        if (token.equals(":"))
+            return TokenType.TYPE_DEF;
+        if (token.equals("->"))
+            return TokenType.TYPE_DEF;
         if (token.matches("(<|>|\\+|\\-|\\*|/||!|=)=") || token.equals("&&") || token.equals("||") || token.equals("++") || token.equals("--"))
             return TokenType.OPERATOR;
         if (token.matches("if|while|else|elif|for"))

@@ -83,7 +83,7 @@ public class Lexer {
                 this.parseIdentifier();
 
             // Parse symbols
-            if(Lexer.isCharacterIn(this.currentChars[1], "+-*/=!<>.,;(){}[]|&"))
+            if(Lexer.isCharacterIn(this.currentChars[1], "+-*/=!<>.,:;(){}[]|&"))
                 this.parseSymbol();
 
             // Ignore whitespace
@@ -188,7 +188,8 @@ public class Lexer {
                 || (this.currentChars[1] == '-' && this.currentChars[2] == '-')
                 || (this.currentChars[1] == '&' && this.currentChars[2] == '&')
                 || (this.currentChars[1] == '|' && this.currentChars[2] == '|')
-                || (this.currentChars[2] == '=' && !Lexer.isCharacterIn(this.currentChars[1], "()[]{};,."))){
+                || (this.currentChars[2] == '=' && !Lexer.isCharacterIn(this.currentChars[1], "()[]{};,."))
+                || (this.currentChars[1] == '-' && this.currentChars[2] == '>')){
             lt = new LexerToken(String.valueOf(this.currentChars[1]) + this.currentChars[2]);
             // add one mroe to the index as the lexer is looking at 2 characters
             this.index++;
